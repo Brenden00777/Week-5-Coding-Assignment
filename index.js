@@ -70,7 +70,7 @@ class Menu{
                     this.deleteTeam();
                     break;
                 case '4' :
-                    this.displayTeam();
+                    this.displayTeams();
                     break;
                 default: 
                     selection = 0;
@@ -88,6 +88,54 @@ class Menu{
         4) display teams
         `);
     }
+
+    showTeamMenuOptions(teamInfo){
+        return prompt(`
+        0) back
+        1) create player
+        2) delete player
+        -----------------------
+        ${teamInfo}
+        `)
+    }
+
+    displayTeams(){
+        let teamString= '';
+        for(let i = 0; i < this.teams.length; i++) {
+            teamString += i + ')' + this.teams[i].name + '\n';
+        }
+        alert(teamString);
+    }
+    createTeam(){
+        let name = prompt('Enter name for new team:')
+        this.teams.push(new Team(name));
+    }
+    
+    viewTeam(){
+     let index = prompt('Enter the index of the team you wish to view:');
+     if(index > -1 && index < this.teams.length){
+        this.selectedTeam = this.teams[index];
+        let decription = 'Team name' + this.selectedTeam.name + '\n';
+
+        for(let i =0; i < this.selectedTeam.players.length;  i++){
+            decription += i + ')' + this.selectedTeam.players[i].name 
+            + ' - ' + this.selectedTeam.players[i] .position + '\n' ;
+        }
+        let selection = this.showTeamMenuOptions(decription);
+        switch(selection){
+            case '1' : 
+                this.createPlayer();
+                break;
+
+             case '2' : 
+                this.deletePlayer();
+                break;
+               
+        }
+    }
+ }
 }
 
+let menu = new Menu();
+menu.start();
 
